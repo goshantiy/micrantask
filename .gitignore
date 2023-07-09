@@ -47,3 +47,19 @@ compile_commands.json
 
 # QtCreator local machine specific files for imported projects
 *creator.user*
+
+.cmake/api/v1/query/cache-v2
+
+.cmake/api/v1/query/cmakeFiles-v1
+
+.cmake/api/v1/query/codemodel-v2
+
+.qtc/package-manager/auto-setup.cmake
+
+.qtc/package-manager/conan_support.cmake
+
+.qtc/package-manager/conan.cmake
+
+*.save
+
+src/main.cpp

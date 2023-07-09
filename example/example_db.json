@@ -1,0 +1,32 @@
+{
+  "value": "Root",
+  "children": [
+    {
+      "value": "Some example text 1 ",
+      "children": [
+        {
+          "value": "Some example text 2",
+          "children": [
+                {
+                "value": "Some example text 3",
+                "children": [
+                    {
+                    "value": "Some example text 4",
+                    "children": []
+                    }
+                ]
+                }
+                      ]
+        },
+        {
+          "value": "Some example text 5",
+          "children": []
+        }
+      ]
+    },
+    {
+      "value": "Some example text 6",
+      "children": []
+    }
+  ]
+}
