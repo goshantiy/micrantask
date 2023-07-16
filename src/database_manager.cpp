@@ -54,7 +54,7 @@ TreeBaseNode *DatabaseManager::parseJson(const QJsonValue &value, TreeBaseNode *
         }
     }
     return rootItem;
-}
+} // parseJson
 void DatabaseManager::saveTreeToJson(const QString &filePath, TreeBaseNode *_rootNode)
 {
     QJsonObject rootObject;
@@ -73,7 +73,7 @@ void DatabaseManager::saveTreeToJson(const QString &filePath, TreeBaseNode *_roo
         file.write(jsonDoc.toJson());
         file.close();
     }
-} // parseJson
+} // saveTreeToJson
 
 void DatabaseManager::serializeTreeToJson(QJsonObject &jsonObject, TreeBaseNode *node)
 {

@@ -16,9 +16,9 @@ public:
     DatabaseTreeApp();
 
 private:
-    /**
-     * @brief Загружает базу данных.
-     * @return true, если загрузка базы данных прошла успешно, в противном случае - false.
+    /*!
+     * \brief Загружает базу данных.
+     * \return true, если загрузка базы данных прошла успешно, в противном случае - false.
      */
     bool loadDatabase();
 

@@ -34,7 +34,7 @@ Item {
                 color: palette.windowText
                 width: parent.width
                 height: parent.height
-                font.pointSize: 18
+                font.pointSize: 15
                 minimumPointSize: 3
                 fontSizeMode: Text.Fit
                 horizontalAlignment: Text.AlignHCenter

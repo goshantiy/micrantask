@@ -12,14 +12,14 @@ class BaseTreeModel
 
 public:
     explicit BaseTreeModel();
-    /**
-     * @brief Конструктор, принимающий корневой узел.
-     * @param root Корневой узел модели.
+    /*!
+     * \brief Конструктор, принимающий корневой узел.
+     * \param root Корневой узел модели.
      */
     explicit BaseTreeModel(TreeBaseNode *root);
     ~BaseTreeModel() override;
-    /**
-     * @brief Перечисление с пользовательскими ролями модели.
+    /*!
+     * \brief Перечисление с пользовательскими ролями модели.
      */
     enum CustomRoles
     {
@@ -38,28 +38,28 @@ public:
     bool hasChildren(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role) const override;
 
-    /**
-     * @brief Устанавливает корневой узел модели.
-     * @param root Корневой узел модели.
+    /*!
+     * \brief Устанавливает корневой узел модели.
+     * \param root Корневой узел модели.
      */
     void setRootNode(TreeBaseNode *);
-    /**
-     * @brief Устанавливает словарь хранящий отображение id к узлу.
-     * @param idMap Словарь.
+    /*!
+     * \brief Устанавливает словарь хранящий отображение id к узлу.
+     * \param idMap Словарь.
      */
     void setIdMap(QMap<qulonglong, TreeBaseNode *>);
-    /**
-     * @brief Возвращает индекс для указанного узла в модели.
-     * @param node Узел.
-     * @return Индекс узла.
+    /*!
+     * \brief Возвращает индекс для указанного узла в модели.
+     * \param node Узел.
+     * \return Индекс узла.
      */
     QModelIndex getIndex(TreeBaseNode *node) const;
 
 protected:
     QMap<qulonglong, TreeBaseNode *> _idMap; /// Словарь хранящий отображение id к узлу.
-    /**
-     * @brief Возвращает набор имен ролей модели.
-     * @return Набор имен ролей.
+    /*!
+     * \brief Возвращает набор имен ролей модели.
+     * \return Набор имен ролей.
      */
     QHash<int, QByteArray> roleNames() const override;
     TreeBaseNode *_rootNode; /// Корневой узел дерева.
