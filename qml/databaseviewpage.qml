@@ -33,5 +33,15 @@ ApplicationWindow {
             width: 2
             color: palette.alternateBase
         }
+        Keys.onPressed: {
+            if (event.key === Qt.Key_Tab) {
+                event.accepted = true
+                if (focus === cacheTree) {
+                    databaseTree.forceActiveFocus()
+                } else if (focus === databaseTree) {
+                    cacheTree.forceActiveFocus()
+                }
+            }
+        }
     }
 }
