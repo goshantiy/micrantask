@@ -153,7 +153,7 @@ void CacheModel::resolveHierarchy(TreeBaseNode *copiedNode, const TreeBaseNode *
             }
         }
     }
-}//resolveHierarchy
+} // resolveHierarchy
 
 void CacheModel::markDeleted(const QModelIndex &sourceIndex)
 {
@@ -162,7 +162,7 @@ void CacheModel::markDeleted(const QModelIndex &sourceIndex)
     TreeBaseNode *sourceNode = static_cast<TreeBaseNode *>(sourceIndex.internalPointer());
     sourceNode->setDeleted(!sourceNode->isDeleted());
     layoutChanged();
-}//markDeleted
+} // markDeleted
 
 void CacheModel::deleteFromCache(const QModelIndex &sourceIndex)
 {
@@ -178,14 +178,12 @@ void CacheModel::deleteFromCache(const QModelIndex &sourceIndex)
         parent->removeChild(node);
     }
 
-    for (auto it : node->getChildren()) it->setParent(node->getParent());
-
     _idMap.remove(node->getId());
     clearChildrensFromMap(node);
 
     delete node;
     endResetModel();
-}//deleteFromCache
+} // deleteFromCache
 
 void CacheModel::clearChildrensFromMap(TreeBaseNode *node)
 {
@@ -193,7 +191,7 @@ void CacheModel::clearChildrensFromMap(TreeBaseNode *node)
         clearChildrensFromMap(it);
         _idMap.remove(it->getId());
     }
-}//clearChildrensFromMap
+} // clearChildrensFromMap
 
 void CacheModel::createNode(const QModelIndex &sourceIndex)
 {

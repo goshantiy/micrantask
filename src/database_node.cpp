@@ -6,8 +6,7 @@ TreeBaseNode::TreeBaseNode(QString value, TreeBaseNode *parent) : _value(value),
 {} // DatabaseNode()
 
 TreeBaseNode::TreeBaseNode(const TreeBaseNode &other) :
-    _deleted(other._deleted), _value(other._value), _parent(other._parent),
-    _id(other._id)
+    _deleted(other._deleted), _value(other._value), _parent(other._parent), _id(other._id)
 {} // DatabaseNode()
 
 TreeBaseNode &TreeBaseNode::operator=(const TreeBaseNode &other)
@@ -78,7 +77,7 @@ void TreeBaseNode::removeChild(TreeBaseNode *child)
     if (ix >= 0) {
         _children.removeAt(indexOfChild(child));
     }
-}//removeChild
+} // removeChild
 
 int TreeBaseNode::childCount() const
 {

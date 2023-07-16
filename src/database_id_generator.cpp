@@ -4,14 +4,14 @@ DatabaseIdGenerator &DatabaseIdGenerator::instance()
 {
     static DatabaseIdGenerator db;
     return db;
-}//instance
+} // instance
 
 qulonglong DatabaseIdGenerator::generateId()
 {
     return ++id;
-}//generateId
+} // generateId
 
 void DatabaseIdGenerator::resetId()
 {
     id = 0;
-}//resetId
+} // resetId

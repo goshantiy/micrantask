@@ -25,7 +25,7 @@ TreeBaseNode *DatabaseManager::loadJson(const QString &filePath)
     _dbpath = filePath;
     TreeBaseNode *root = parseJson(jsonObject, nullptr);
     return root;
-}//loadJson
+} // loadJson
 
 TreeBaseNode *DatabaseManager::parseJson(const QJsonValue &value, TreeBaseNode *parent)
 {
@@ -73,7 +73,7 @@ void DatabaseManager::saveTreeToJson(const QString &filePath, TreeBaseNode *_roo
         file.write(jsonDoc.toJson());
         file.close();
     }
-}//parseJson
+} // parseJson
 
 void DatabaseManager::serializeTreeToJson(QJsonObject &jsonObject, TreeBaseNode *node)
 {
@@ -93,7 +93,7 @@ void DatabaseManager::serializeTreeToJson(QJsonObject &jsonObject, TreeBaseNode 
     }
 
     jsonObject = nodeObject;
-}//serializeTreeToJson
+} // serializeTreeToJson
 
 void DatabaseManager::InitBaseDatabase(QString path)
 {
@@ -139,12 +139,12 @@ void DatabaseManager::InitBaseDatabase(QString path)
         file.write(base_database.toUtf8());
         _dbpath = path;
     }
-}//InitBaseDatabase
+} // InitBaseDatabase
 
 void DatabaseManager::saveChanges(TreeBaseNode *node)
 {
     saveTreeToJson(_dbpath, node);
-}//saveChanges
+} // saveChanges
 
 void DatabaseManager::resetDatabase()
 {
@@ -153,9 +153,9 @@ void DatabaseManager::resetDatabase()
     _treeIdMap.clear();
     TreeBaseNode *root = loadJson(_dbpath);
     emit sendChanges(root, getIdMap());
-}//resetDatabase
+} // resetDatabase
 
 QMap<qulonglong, TreeBaseNode *> &DatabaseManager::getIdMap()
 {
     return _treeIdMap;
-}//getIdMap
+} // getIdMap

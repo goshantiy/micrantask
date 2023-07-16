@@ -57,4 +57,4 @@ void DatabaseModel::receiveOnReset(TreeBaseNode *resetRoot, QMap<qulonglong, Tre
 
     setIdMap(map);
     endResetModel();
-}//receiveOnReset
+} // receiveOnReset

@@ -12,7 +12,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED)
 INCLUDE_SOURCES(tree_database})
 
 set(QT_COMPONENTS
-    Core Widgets
     QuickWidgets
     Core
     Qml

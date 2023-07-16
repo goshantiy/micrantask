@@ -52,7 +52,7 @@ QModelIndex BaseTreeModel::index(int row, int column, const QModelIndex &parent)
     if (!parent.isValid())
         parentItem = _rootNode;
     else
-        parentItem = static_cast<TreeBaseNode*>(parent.internalPointer());
+        parentItem = static_cast<TreeBaseNode *>(parent.internalPointer());
 
     TreeBaseNode *childItem = parentItem->getChild(row);
     if (childItem)
@@ -68,7 +68,7 @@ QModelIndex BaseTreeModel::parent(const QModelIndex &index) const
     TreeBaseNode *childItem = static_cast<TreeBaseNode *>(index.internalPointer());
     TreeBaseNode *parentItem = childItem->getParent();
 
-    if (!parentItem||parentItem == _rootNode)
+    if (!parentItem || parentItem == _rootNode)
         return QModelIndex();
     return createIndex(parentItem->getRow(), 0, parentItem);
 } // parent
