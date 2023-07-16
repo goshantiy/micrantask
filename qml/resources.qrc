@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file>databaseviewpage.qml</file>
+        <file>DatabaseTreeView/DatabaseTree.qml</file>
+        <file>DatabaseTreeView/DatabaseContextMenu.qml</file>
+        <file>DatabaseTreeView/CacheTree.qml</file>
+        <file>DatabaseTreeView/CacheContextMenu.qml</file>
+    </qresource>
+</RCC>
