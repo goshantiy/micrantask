@@ -35,12 +35,14 @@ Item {
             Rectangle {
                 width: parent.width
                 height: parent.height
-                color: (styleData.selected ? palette.highlight : model.deleted ? Qt.rgba(176 / 255, 68 / 255, 68 / 255, 0.5) : palette.window)
+                color: (model.deleted ? Qt.rgba(
+                                            176 / 255, 68 / 255, 68 / 255,
+                                            0.5) : styleData.selected ? palette.highlight : palette.window)
             }
         }
         TableViewColumn {
             role: "id"
-            title: "uuid"
+            title: "id"
             width: cacheTreeView.width / 2
         }
 
@@ -75,7 +77,24 @@ Item {
             }
         }
     }
-
+    Keys.onReleased: {
+        if (event.key === Qt.Key_C && (event.modifiers & Qt.ControlModifier)) {
+            cacheModel.createNode(cacheTreeView.currentIndex)
+            cacheTreeView.expand(cacheTreeView.currentIndex)
+        }
+        if (event.key === Qt.Key_E && (event.modifiers & Qt.ControlModifier)) {
+            cacheTreeView.expandAllItems(cacheTreeView.rootIndex)
+        }
+        if (event.key === Qt.Key_W && (event.modifiers & Qt.ControlModifier)) {
+            cacheTreeView.collapseAllItems(cacheTreeView.rootIndex)
+        }
+        if (event.key === Qt.Key_M && (event.modifiers & Qt.ControlModifier)) {
+            cacheModel.moveChangesToDatabase()
+        }
+        if (event.key === Qt.Key_D && (event.modifiers & Qt.ControlModifier)) {
+            cacheModel.markDeleted(cacheTreeView.currentIndex)
+        }
+    }
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
@@ -89,6 +108,9 @@ Item {
                                                                         "clickedIndex": index
                                                                     })
                 contextMenu.popup()
+                contextMenu.closed.connect(function () {
+                    contextMenu.destroy()
+                })
             }
         }
     }

@@ -8,16 +8,71 @@
 #include <QDebug>
 #include <QMap>
 #include "database_node.h"
+#include "database_id_generator.h"
+
 class DatabaseManager
+    : public QObject /// Менеджер базы данных, отвечающий за работу с файловой системой.
 {
+    Q_OBJECT
 public:
+    /**
+     * @brief Загружает JSON-файл и создает дерево узлов.
+     * @param filePath Путь к JSON-файлу.
+     * @return Указатель на корневой узел дерева или nullptr.
+     */
     TreeBaseNode *loadJson(const QString &filePath);
+    /**
+     * @brief Рекурсивно разбирает JSON-значение и создает соответствующие узлы.
+     * @param jsonValue JSON-значение, которое разбирается.
+     * @param parentNode Родительский узел, к которому добавляются созданные узлы.
+     * @return Указатель на корневой узел дерева.
+     */
     TreeBaseNode *parseJson(const QJsonValue &, TreeBaseNode * = nullptr);
-    QMap<QUuid, TreeBaseNode *> &getIdMap();
+    /**
+     * @brief Возвращает ссылку на словарь узлов.
+     * @return Ссылка на словарь узлов.
+     */
+    QMap<qulonglong, TreeBaseNode *> &getIdMap();
+    /**
+     * @brief Инициализирует базу данных.
+     * @param dbPath Путь к базе данных.
+     */
+    void InitBaseDatabase(QString);
+public slots:
+    /**
+     * @brief Сохраняет изменения в указанном узле в базу данных.
+     * @param node Узел, содержащий изменения.
+     */
+    void saveChanges(TreeBaseNode *node);
+    /**
+     * @brief Сбрасывает базу данных к базовым значениям.
+     */
+    void resetDatabase();
+signals:
+    /**
+     * @brief Сигнал, отправляющий новый корень дерева.
+     */
+    void sendChanges(TreeBaseNode *, QMap<qulonglong, TreeBaseNode *> _treeIdMap);
 
 private:
-    QUuid generateId();
-    QMap<QUuid, TreeBaseNode *> _treeIdMap;
+    /**
+     * @brief Сохраняет дерево в формате JSON в указанный файл.
+     * @param filePath Путь к файлу, в который сохраняется JSON.
+     * @param _rootNode Корневой узел дерева.
+     */
+    void saveTreeToJson(const QString &filePath, TreeBaseNode *_rootNode);
+    /**
+     * @brief Рекурсивно сериализует узел и его дочерние узлы в JSON-объект.
+     * @param jsonObject JSON-объект, в который сериализуется узел.
+     * @param node Узел, который сериализуется.
+     */
+    void serializeTreeToJson(QJsonObject &jsonObject, TreeBaseNode *node);
+
+    QMap<qulonglong, TreeBaseNode *>
+     _treeIdMap; /// Словарь, хранящий отображение идентификаторов на узлы.
+    QString _dbpath; /// Путь к базе данных.
+
+    DatabaseIdGenerator &_idGenerator = DatabaseIdGenerator::instance(); /// Синглтон генератор id.
 };
 
 #endif // DATABASE_LOADER_H

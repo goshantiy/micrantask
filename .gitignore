@@ -61,5 +61,3 @@ compile_commands.json
 .qtc/package-manager/conan.cmake
 
 *.save
-
-src/main.cpp

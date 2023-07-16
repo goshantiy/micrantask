@@ -1,8 +1,12 @@
 #include "database_model.h"
 BaseTreeModel::BaseTreeModel() : _rootNode(new TreeBaseNode())
 {} // DatabaseModel()
-BaseTreeModel::BaseTreeModel(TreeBaseNode *root) : _rootNode(root)
-{} // DatabaseModel()
+
+BaseTreeModel::BaseTreeModel(TreeBaseNode *root)
+{
+    _rootNode = root;
+} // DatabaseModel()
+
 BaseTreeModel::~BaseTreeModel()
 {
     delete _rootNode;
@@ -16,7 +20,7 @@ QVariant BaseTreeModel::data(const QModelIndex &index, int role) const
 
     switch (role) {
     case (IdRole): {
-        return QVariant(item->getId());
+        return QVariant(static_cast<qulonglong>(item->getId()));
     }
     case (ValueRole): {
         return QVariant(item->getValue());
@@ -27,7 +31,8 @@ QVariant BaseTreeModel::data(const QModelIndex &index, int role) const
     default:
         return QVariant();
     }
-} // data
+} // data()
+
 QHash<int, QByteArray> BaseTreeModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
@@ -35,25 +40,25 @@ QHash<int, QByteArray> BaseTreeModel::roleNames() const
     roles[ValueRole] = "value";
     roles[DeletedRole] = "deleted";
     return roles;
-}
+} // roleNames()
 
 QModelIndex BaseTreeModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (!hasIndex(row, column, parent))
-        return {};
+        return QModelIndex();
 
     TreeBaseNode *parentItem;
 
     if (!parent.isValid())
         parentItem = _rootNode;
     else
-        parentItem = static_cast<TreeBaseNode *>(parent.internalPointer());
+        parentItem = static_cast<TreeBaseNode*>(parent.internalPointer());
 
     TreeBaseNode *childItem = parentItem->getChild(row);
-    if (nullptr != childItem)
+    if (childItem)
         return createIndex(row, column, childItem);
-    return QModelIndex {};
-}
+    return QModelIndex();
+} // index
 
 QModelIndex BaseTreeModel::parent(const QModelIndex &index) const
 {
@@ -63,10 +68,10 @@ QModelIndex BaseTreeModel::parent(const QModelIndex &index) const
     TreeBaseNode *childItem = static_cast<TreeBaseNode *>(index.internalPointer());
     TreeBaseNode *parentItem = childItem->getParent();
 
-    if (parentItem == _rootNode)
+    if (!parentItem||parentItem == _rootNode)
         return QModelIndex();
     return createIndex(parentItem->getRow(), 0, parentItem);
-}
+} // parent
 
 int BaseTreeModel::rowCount(const QModelIndex &parent) const
 {
@@ -77,34 +82,36 @@ int BaseTreeModel::rowCount(const QModelIndex &parent) const
     else
         parentItem = static_cast<TreeBaseNode *>(parent.internalPointer());
     return parentItem->childCount();
-}
+} // rowCount
 
 int BaseTreeModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return 1;
-}
+} // columnCount
 
 bool BaseTreeModel::hasChildren(const QModelIndex &index) const
 {
     if (!index.isValid())
         return false;
     TreeBaseNode *parentItem = static_cast<TreeBaseNode *>(index.internalPointer());
-    return parentItem->getChildCount();
-}
+    return parentItem->childCount();
+} // hasChildren
 
 QModelIndex BaseTreeModel::getIndex(TreeBaseNode *node) const
 {
-    int row = node->getRow();
-    return createIndex(row, 0, node);
-}
+    if (!node)
+        return QModelIndex();
+    return createIndex(node->getRow(), 0, node);
+} // getIndex
 
 void BaseTreeModel::setRootNode(TreeBaseNode *root)
 {
+    delete _rootNode;
     _rootNode = root;
-}
+} // setRootNode
 
-void BaseTreeModel::setIdMap(QMap<QUuid, TreeBaseNode *> map)
+void BaseTreeModel::setIdMap(QMap<qulonglong, TreeBaseNode *> map)
 {
     _idMap = map;
-}
+} // setIdMap

@@ -6,22 +6,17 @@ TreeBaseNode::TreeBaseNode(QString value, TreeBaseNode *parent) : _value(value),
 {} // DatabaseNode()
 
 TreeBaseNode::TreeBaseNode(const TreeBaseNode &other) :
-    _deleted(other._deleted), _value(other._value), _key(other._key), _parent(other._parent)
-{
-    for (TreeBaseNode *child : other._children) {
-        TreeBaseNode *clonedChild = new TreeBaseNode(*child);
-        clonedChild->setParent(this);
-        _children.append(clonedChild);
-    }
-} // DatabaseNode()
+    _deleted(other._deleted), _value(other._value), _parent(other._parent),
+    _id(other._id)
+{} // DatabaseNode()
 
 TreeBaseNode &TreeBaseNode::operator=(const TreeBaseNode &other)
 {
     if (this != &other) {
         _deleted = other._deleted;
         _value = other._value;
-        _key = other._key;
         _id = other._id;
+        _parent = other._parent;
 
         for (TreeBaseNode *child : qAsConst(_children)) {
             delete child;
@@ -35,12 +30,8 @@ TreeBaseNode &TreeBaseNode::operator=(const TreeBaseNode &other)
     }
     return *this;
 } // operator =
-int TreeBaseNode::childCount() const
-{
-    return _children.size();
-} // childCount()
 
-TreeBaseNode *TreeBaseNode::getChild(size_t index)
+TreeBaseNode *TreeBaseNode::getChild(qulonglong index)
 {
     if (index < _children.size())
         return _children[index];
@@ -48,7 +39,7 @@ TreeBaseNode *TreeBaseNode::getChild(size_t index)
     return nullptr;
 } // getChild
 
-QVector<TreeBaseNode *> TreeBaseNode::getChildren() const
+QList<TreeBaseNode *> TreeBaseNode::getChildren() const
 {
     return _children;
 } // child()
@@ -65,21 +56,16 @@ void TreeBaseNode::addChild(TreeBaseNode *child)
 
 int TreeBaseNode::getRow() const
 {
-    if (nullptr != _parent)
+    if (_parent)
         return _parent->_children.indexOf(const_cast<TreeBaseNode *>(this));
 
     return 0;
 } // getRow
 
-QUuid TreeBaseNode::getId()
+qulonglong TreeBaseNode::getId()
 {
     return _id;
 } // getId
-
-int TreeBaseNode::getChildCount()
-{
-    return _children.size();
-} // getChildCount()
 
 bool TreeBaseNode::isDeleted()
 {
@@ -90,37 +76,30 @@ void TreeBaseNode::removeChild(TreeBaseNode *child)
 {
     auto ix = indexOfChild(child);
     if (ix >= 0) {
-        // delete _children[ix];
-        _children.remove(indexOfChild(child));
+        _children.removeAt(indexOfChild(child));
     }
+}//removeChild
+
+int TreeBaseNode::childCount() const
+{
+    return _children.size();
 } // removeChild
 
 void TreeBaseNode::setDeleted(bool deleted)
 {
-    if (_deleted == deleted)
-        return;
     _deleted = deleted;
     for (auto &it : _children) it->setDeleted(deleted);
 } // setDeleted
 
-void TreeBaseNode::setId(QUuid id)
+void TreeBaseNode::setId(qulonglong id)
 {
     _id = id;
 } // setId
 
-QString TreeBaseNode::getKey()
-{
-    return _key;
-} // removeChild()
 void TreeBaseNode::setValue(QVariant value)
 {
     _value = value;
 } // setValue
-
-void TreeBaseNode::setKey(QString key)
-{
-    _key = key;
-} // setKey
 
 void TreeBaseNode::setParent(TreeBaseNode *parent)
 {

@@ -11,14 +11,14 @@ Item {
         }
         id: databaseTreeView
         anchors.fill: parent
-        headerVisible: false
+        headerVisible: true
         backgroundVisible: false
         horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
         rowDelegate: Item {
             Rectangle {
                 width: parent.width
                 height: parent.height
-                color: model.deleted ? "red" : (styleData.selected ? palette.highlight : palette.window)
+                color: (styleData.selected ? palette.highlight : model.deleted ? Qt.rgba(176 / 255, 68 / 255, 68 / 255, 0.5) : palette.window)
                 Text {
                     anchors.centerIn: parent
                     color: palette.windowText
@@ -44,9 +44,15 @@ Item {
 
         TableViewColumn {
             role: "value"
-            width:parent.width
+            title: "value"
+            width: databaseTreeView.width / 2
         }
 
+        //        TableViewColumn {
+        //            role: "id"
+        //            title: "id"
+        //            width: databaseTreeView.width / 2
+        //        }
         model: databaseModel
 
         function expandAllItems(item) {
@@ -64,6 +70,20 @@ Item {
             }
         }
     }
+    Keys.onReleased: {
+        if (event.key === Qt.Key_E && (event.modifiers & Qt.ControlModifier)) {
+            databaseTreeView.expandAllItems(databaseTreeView.rootIndex)
+        }
+        if (event.key === Qt.Key_W && (event.modifiers & Qt.ControlModifier)) {
+            databaseTreeView.collapseAllItems(databaseTreeView.rootIndex)
+        }
+        if (event.key === Qt.Key_C && (event.modifiers & Qt.ControlModifier)) {
+            if (event.modifiers & Qt.ShiftModifier)
+                databaseModel.moveSubtree(databaseTreeView.currentIndex)
+            else
+                databaseModel.moveNode(databaseTreeView.currentIndex)
+        }
+    }
 
     MouseArea {
         anchors.fill: parent
@@ -78,6 +98,9 @@ Item {
                                                                         "clickedIndex": index
                                                                     })
                 contextMenu.popup()
+                contextMenu.closed.connect(function () {
+                    contextMenu.destroy()
+                })
             }
         }
     }

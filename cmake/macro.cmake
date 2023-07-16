@@ -9,13 +9,10 @@ macro(AUTO_BUILD_RESOURCES_QT5)
     set(CMAKE_AUTORCC ON)
     set(CMAKE_AUTOUIC ON)
 endmacro()
-# Макрос ищет указанные в аргументах компоненты QT линкует их с таргетом
 macro(FIND_AND_LINK_QT)
     set(_OPTIONS_ARGS)
     set(_ONE_VALUE_ARGS TARGET)
     set(_MULTI_VALUE_ARGS QT_COMPONENTS)
-
-    # Парсим все переданные аргументы в модуль
     cmake_parse_arguments(_LIBS_LINKING
         "${_OPTIONS_ARGS}"
         "${_ONE_VALUE_ARGS}"
@@ -30,10 +27,7 @@ macro(FIND_AND_LINK_QT)
         message(FATAL_ERROR "FIND_AND_LINK_QT : QT_COMPONENTS is not set")
     endif()
 
-    # Ищем пакеты Qt6 или Qt5
     find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS ${_LIBS_LINKING_QT_COMPONENTS})
-
-    # Ищем нужные компоненты
     find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS ${_LIBS_LINKING_QT_COMPONENTS})
 
     foreach(COMPONENT ${_LIBS_LINKING_QT_COMPONENTS})
@@ -46,7 +40,6 @@ macro(FIND_AND_LINK_QT)
         )
     endforeach()
 endmacro()
-# Макрос ищет все исходники в проекте и формирует группу из них
 macro(INCLUDE_SOURCES NAME)
     set(_OPTIONS_ARGS NOT_RECURSIVE)
     set(_ONE_VALUE_ARGS DIR)

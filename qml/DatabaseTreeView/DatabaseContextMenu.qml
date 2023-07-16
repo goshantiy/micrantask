@@ -11,14 +11,13 @@ Menu {
     property var clickedIndex
     MenuItem {
         id: expandAllItem
-        text: "Expand tree"
         onTriggered: {
             console.log("Expand index", clickedIndex)
             databaseTreeView.expandAllItems(databaseTreeView.rootIndex)
         }
 
         contentItem: Text {
-            text: expandAllItem.text
+            text: "Expand tree (Ctrl + E)"
             color: palette.windowText
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -32,14 +31,13 @@ Menu {
     }
     MenuItem {
         id: collapseAllItem
-        text: "Collapse tree"
         onTriggered: {
             console.log("index", clickedIndex)
             databaseTreeView.collapseAllItems(databaseTreeView.rootIndex)
         }
 
         contentItem: Text {
-            text: collapseAllItem.text
+            text: "Collapse tree (Ctrl + W)"
             color: palette.windowText
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -53,15 +51,14 @@ Menu {
     }
     MenuItem {
         id: copyToCacheTree
-        text: "Load subtree"
         onTriggered: {
             console.log("copy subtree to cache call")
             console.log(clickedIndex)
-            cacheModel.copySubtree(clickedIndex)
+            databaseModel.moveSubtree(clickedIndex)
         }
 
         contentItem: Text {
-            text: copyToCacheTree.text
+            text: "Load subtree (Ctrl + Shift + C)"
             color: palette.windowText
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -74,16 +71,15 @@ Menu {
         }
     }
     MenuItem {
-        id:copyToCacheItem
-        text: "Load item"
+        id: copyToCacheItem
         onTriggered: {
             console.log("copy node to cache call")
             console.log(clickedIndex)
-            cacheModel.copyNode(clickedIndex)
+            databaseModel.moveNode(clickedIndex)
         }
 
         contentItem: Text {
-            text: copyToCacheItem.text
+            text: "Load item (Ctrl + C)"
             color: palette.windowText
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -92,6 +88,27 @@ Menu {
         background: Rectangle {
             implicitHeight: 20
             color: copyToCacheItem.hovered ? palette.highlight : palette.window
+            border.color: "black"
+        }
+    }
+    MenuItem {
+        id: resetDb
+        onTriggered: {
+            console.log("resetDb")
+            console.log(clickedIndex)
+            databaseModel.resetDatabase()
+        }
+
+        contentItem: Text {
+            text: "Reset database"
+            color: palette.windowText
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+
+        background: Rectangle {
+            implicitHeight: 20
+            color: resetDb.hovered ? palette.highlight : palette.window
             border.color: "black"
         }
     }

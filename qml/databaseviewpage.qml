@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.15
+import QtQuick.Dialogs 1.3
 import "DatabaseTreeView"
 
 ApplicationWindow {
@@ -15,6 +16,8 @@ ApplicationWindow {
     }
     color: palette.alternateBase
     SplitView {
+        id: splitView
+        visible: true
         anchors.fill: parent
         CacheTree {
             Layout.minimumWidth: 300

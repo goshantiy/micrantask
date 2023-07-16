@@ -11,14 +11,13 @@ Menu {
     property var clickedIndex
     MenuItem {
         id: expandAllItem
-        text: "Expand tree"
         onTriggered: {
             console.log("index", clickedIndex)
             cacheTreeView.expandAllItems(cacheTreeView.rootIndex)
         }
 
         contentItem: Text {
-            text: expandAllItem.text
+            text: "Expand tree (Ctrl + E)"
             color: palette.windowText
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -32,14 +31,13 @@ Menu {
     }
     MenuItem {
         id: collapseAllItem
-        text: "Collapse tree"
         onTriggered: {
             console.log("index", clickedIndex)
             cacheTreeView.collapseAllItems(cacheTreeView.rootIndex)
         }
 
         contentItem: Text {
-            text: collapseAllItem.text
+            text: "Collapse tree (Ctrl + W)"
             color: palette.windowText
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -53,14 +51,13 @@ Menu {
     }
     MenuItem {
         id: createItem
-        text: "Create child"
         onTriggered: {
             console.log("index", clickedIndex)
             cacheModel.createNode(clickedIndex)
         }
 
         contentItem: Text {
-            text: createItem.text
+            text: "Create child (Ctrl + C)"
             color: palette.windowText
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -75,15 +72,14 @@ Menu {
 
     MenuItem {
         id: deleteItem
-        text: "Delete item"
         onTriggered: {
             console.log("delete call")
             console.log(clickedIndex)
-            cacheModel.deleteData(clickedIndex)
+            cacheModel.markDeleted(clickedIndex)
         }
 
         contentItem: Text {
-            text: deleteItem.text
+            text: "Delete item (Ctrl + D)"
             color: palette.windowText
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -92,6 +88,66 @@ Menu {
         background: Rectangle {
             implicitHeight: 20
             color: deleteItem.hovered ? palette.highlight : palette.window
+            border.color: "black"
+        }
+    }
+    MenuItem {
+        id: moveChangesFromCache
+        onTriggered: {
+            console.log("Move cache changes call")
+            cacheModel.moveChangesToDatabase()
+        }
+
+        contentItem: Text {
+            text: "Move all changes (Ctrl + M)"
+            color: palette.windowText
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+
+        background: Rectangle {
+            implicitHeight: 20
+            color: moveChangesFromCache.hovered ? palette.highlight : palette.window
+            border.color: "black"
+        }
+    }
+    MenuItem {
+        id: deleteFromCache
+        onTriggered: {
+            console.log("Delete from Cache")
+            cacheModel.deleteFromCache(clickedIndex)
+        }
+
+        contentItem: Text {
+            text: "Delete from Cache"
+            color: palette.windowText
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+
+        background: Rectangle {
+            implicitHeight: 20
+            color: deleteFromCache.hovered ? palette.highlight : palette.window
+            border.color: "black"
+        }
+    }
+    MenuItem {
+        id: clearCache
+        onTriggered: {
+            console.log("Clear Cache")
+            cacheModel.clear()
+        }
+
+        contentItem: Text {
+            text: "Clear Cache"
+            color: palette.windowText
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+
+        background: Rectangle {
+            implicitHeight: 20
+            color: clearCache.hovered ? palette.highlight : palette.window
             border.color: "black"
         }
     }
