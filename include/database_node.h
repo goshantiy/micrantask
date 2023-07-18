@@ -16,7 +16,6 @@ public:
     explicit TreeBaseNode(TreeBaseNode *parent = nullptr);
     /*!
      * \brief Конструктор с указанием ключа.
-     * \param key Ключ узла.
      * \param parent Родительский узел.
      */
     explicit TreeBaseNode(QString, TreeBaseNode *parent);

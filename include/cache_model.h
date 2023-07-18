@@ -27,10 +27,7 @@ public slots:
      * \param index Индекс элемента, который добавляется в модель.
      */
     void receiveNode(const QModelIndex &);
-    /*!
-     * \brief Слот, принимающий узел для обновления модели.
-     * \param index Индекс элемента, который добавляется в модель.
-     */
+
 public:
     explicit CacheModel();
     /*!

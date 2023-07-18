@@ -24,10 +24,10 @@ TreeBaseNode *CacheModel::copyNodeRecursive(TreeBaseNode *sourceNode, TreeBaseNo
 
         if (!parentNode->getParent()) {
             _rootNode->removeChild(existingNode);
-            existingNode->setParent(parentNode);
         } else {
             parent->removeChild(existingNode);
         }
+         existingNode->setParent(parentNode);
         for (int i = 0; i < sourceNode->childCount(); ++i) {
             TreeBaseNode *sourceChildNode = sourceNode->getChild(i);
             TreeBaseNode *copiedChildNode = copyNodeRecursive(sourceChildNode, existingNode);
@@ -83,7 +83,6 @@ void CacheModel::receiveSubtree(const QModelIndex &sourceIndex)
         TreeBaseNode *sourceParent = sourceNode->getParent();
         qulonglong sourceParentId = sourceParent->getId();
         TreeBaseNode *thisParent = _rootNode;
-        QModelIndex modelInsertIndex = QModelIndex();
         if (_idMap.contains(sourceParentId)) {
             thisParent = _idMap[sourceParentId];
         }

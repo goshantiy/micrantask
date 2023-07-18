@@ -51,8 +51,6 @@ void DatabaseModel::receiveOnReset(TreeBaseNode *resetRoot, QMap<qulonglong, Tre
     beginResetModel();
     delete _rootNode;
     _idMap.clear();
-
-    _rootNode = new TreeBaseNode();
     _rootNode = resetRoot;
 
     setIdMap(map);
